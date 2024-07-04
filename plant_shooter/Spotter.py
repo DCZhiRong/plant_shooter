@@ -33,7 +33,7 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 0.02
+p = 0.03
 i = 0
 d = 0
 
@@ -70,7 +70,7 @@ class ImagePublisher(Node):
   def timer_callback(self):
     ret, frame = self.cap.read()     
     frame = cv2.flip(frame,0)  
-    result, objectInfo = self.getObjects(frame,0.45,0.2, objects=['bottle'])
+    result, objectInfo = self.getObjects(frame,0.6,0.2, objects=['bottle'])
     # Publish the image.
     # The 'cv2_to_imgmsg' method converts an OpenCV
     # image to a ROS 2 image message
