@@ -33,7 +33,7 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 0.05
+p = 0.03
 i = 0
 d = 0.02
 
@@ -88,7 +88,7 @@ class ImagePublisher(Node):
       self.prex = x_error
       self.prey = y_error
       ux = p*x_error + i*self.ex + d*dedtX
-      uy = p*y_error + i*self.ey + d*dedtY
+      uy = 3*p*y_error + i*self.ey + d*dedtY
       ux = min(60, max(-60, ux))
       uy = min(60, max(-60, uy))
       print(uy)
