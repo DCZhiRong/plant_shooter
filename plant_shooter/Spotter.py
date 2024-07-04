@@ -33,9 +33,9 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 0.04
+p = 0.02
 i = 0
-d = 0.005
+d = 0.01
 
 class ImagePublisher(Node):
 
