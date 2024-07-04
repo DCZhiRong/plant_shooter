@@ -88,7 +88,7 @@ class ImagePublisher(Node):
       self.prex = x_error
       self.prey = y_error
       ux = p*x_error + i*self.ex + d*dedtX
-      uy = 10*p*y_error + i*self.ey + d*dedtY
+      uy = 3*p*y_error + i*self.ey + d*dedtY
       ux = min(60, max(-60, ux))
       uy = min(60, max(-60, uy))
       print(uy)
