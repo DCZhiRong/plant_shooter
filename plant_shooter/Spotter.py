@@ -70,7 +70,7 @@ class ImagePublisher(Node):
   def timer_callback(self):
     ret, frame = self.cap.read()     
     frame = cv2.flip(frame,0)  
-    result, objectInfo = self.getObjects(frame,0.6,0.2, objects=['bottle'])
+    result, objectInfo = self.getObjects(frame,0.5,0.2, objects=['bottle'])
     # Publish the image.
     # The 'cv2_to_imgmsg' method converts an OpenCV
     # image to a ROS 2 image message
