@@ -33,7 +33,7 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 0.06
+p = 0.05
 i = 0
 d = 0.02
 
