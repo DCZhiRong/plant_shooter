@@ -97,7 +97,7 @@ class ImagePublisher(Node):
       uy = p*y_error + i*self.ey + d*dedtY
       min(150, max(30, ux))
       min(150, max(30, uy))
-      self.get_logger().info(x_error)
+      print(x_error)
       self.pca.servo[0].angle = int(uy)
       self.pca.servo[1].angle = int(ux)
 
