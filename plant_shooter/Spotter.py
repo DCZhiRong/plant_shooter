@@ -1,5 +1,8 @@
 #! /usr/bin/env python3
 import os
+import busio
+import time
+from adafruit_servokit import ServoKit
 import rclpy # Python Client Library for ROS 2
 from rclpy.node import Node # Handles the creation of nodes
 from sensor_msgs.msg import Image # Image is the message type
@@ -20,6 +23,25 @@ net.setInputScale(1.0/ 127.5)
 net.setInputMean((127.5, 127.5, 127.5))
 net.setInputSwapRB(True)
 
+nbPCAServo=2
+
+MIN_IMP  =[1000, 1000]
+MAX_IMP  =[2500, 2500]
+MIN_ANG  =[30, 30]
+MAX_ANG  =[150, 150]
+
+pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
+
+prevT = 0
+ex = 0
+ey = 0
+prex = 0
+prey = 0
+
+p = 10
+i = 0
+d = 0
+
 class ImagePublisher(Node):
 
   def __init__(self):
@@ -37,6 +59,9 @@ class ImagePublisher(Node):
     self.cap.set(4,480)
     # Used to convert between ROS and OpenCV images
     self.br = CvBridge()
+    for i in range(nbPCAServo):
+        pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
+
    
   def timer_callback(self):
     ret, frame = self.cap.read()     
@@ -47,8 +72,26 @@ class ImagePublisher(Node):
     # image to a ROS 2 image message
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     if objectInfo:
-      print(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
-      print(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
+      x_error = 320-objectInfo[0][0][0]+objectInfo[0][0][2]/2
+      y_error = 240-objectInfo[0][0][1]+objectInfo[0][0][3]/2
+      curT = time.time()
+      time_diff = curT-prevT
+      preT = curT
+      dedtX = (x_error - prex)/time_diff
+      dedtY = (y_error - prey)/time_diff
+      ex += x_error*time_diff
+      ey += y_error*time_diff
+      prex = x_error
+      prey = y_error
+      ux = p*x_error + i*ex + d*dedtX
+      uy = p*y_error + i*ey + d*dedtY
+      min(150, max(30, ux))
+      min(150, max(30, uy))
+      print(x_error)
+      pca.servo[0].angle(uy)
+      pca.servo[1].angle(ux)
+
+      
     # Display the message on the console
     # self.get_logger().info('Publishing video frame')
 
