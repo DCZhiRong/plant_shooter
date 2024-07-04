@@ -59,8 +59,20 @@ class ImagePublisher(Node):
     self.cap.set(4,480)
     # Used to convert between ROS and OpenCV images
     self.br = CvBridge()
+
+    self.prevT = 0
+    self.ex = 0
+    self.ey = 0
+    self.prex = 0
+    self.prey = 0
+
+    self.p = 10
+    self.i = 0
+    self.d = 0
+
     for i in range(nbPCAServo):
         pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
+        pca.servo[i].angle(90)
 
    
   def timer_callback(self):
@@ -75,16 +87,16 @@ class ImagePublisher(Node):
       x_error = 320-objectInfo[0][0][0]+objectInfo[0][0][2]/2
       y_error = 240-objectInfo[0][0][1]+objectInfo[0][0][3]/2
       curT = time.time()
-      time_diff = curT-prevT
-      preT = curT
-      dedtX = (x_error - prex)/time_diff
-      dedtY = (y_error - prey)/time_diff
-      ex += x_error*time_diff
-      ey += y_error*time_diff
-      prex = x_error
-      prey = y_error
-      ux = p*x_error + i*ex + d*dedtX
-      uy = p*y_error + i*ey + d*dedtY
+      time_diff = curT-self.prevT
+      self.preT = curT
+      dedtX = (x_error - self.prex)/time_diff
+      dedtY = (y_error - self.prey)/time_diff
+      self.ex += x_error*time_diff
+      self.ey += y_error*time_diff
+      self.prex = x_error
+      self.prey = y_error
+      ux = p*x_error + i*self.ex + d*dedtX
+      uy = p*y_error + i*self.ey + d*dedtY
       min(150, max(30, ux))
       min(150, max(30, uy))
       print(x_error)
