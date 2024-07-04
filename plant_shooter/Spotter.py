@@ -68,8 +68,9 @@ class ImagePublisher(Node):
     self.i = 0
     self.d = 0
     self.pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
-    self.pca.servo[0].set_pulse_width_range(MIN_IMP[0] , MAX_IMP[0])
-    self.pca.servo[0].angle(90)
+    for i in range(nbPCAServo):
+      self.pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
+      #self.pca.servo[i].angle(90)
 
    
   def timer_callback(self):
