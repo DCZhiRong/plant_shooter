@@ -26,7 +26,7 @@ class ImagePublisher(Node):
 
     super().__init__('image_publisher')
 
-    self.publisher_ = self.create_publisher(CompressedImageImage, 'video_frames', 10)
+    self.publisher_ = self.create_publisher(CompressedImage, 'video_frames', 10)
 
     timer_period = 0.02  # seconds
 
