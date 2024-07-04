@@ -89,8 +89,8 @@ class ImagePublisher(Node):
       self.prey = y_error
       ux = p*x_error + i*self.ex + d*dedtX
       uy = p*y_error + i*self.ey + d*dedtY
-      ux = min(45, max(-45, ux))
-      uy = min(45, max(-45, -uy))
+      ux = min(60, max(-60, ux))
+      uy = min(60, max(-60, -uy))
       print(x_error)
       pca.servo[0].angle = uy+90
       pca.servo[1].angle = ux+90
