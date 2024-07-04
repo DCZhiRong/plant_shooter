@@ -35,7 +35,7 @@ pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 p = 0.06
 i = 0
-d = 0.1
+d = 0.02
 
 class ImagePublisher(Node):
 
