@@ -2,7 +2,7 @@
 import os
 import rclpy # Python Client Library for ROS 2
 from rclpy.node import Node # Handles the creation of nodes
-from sensor_msgs.msg import Image # Image is the message type
+from sensor_msgs.msg import CompressedImage # Image is the message type
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import cv2 # OpenCV library
 from ament_index_python.packages import get_package_share_directory
@@ -26,7 +26,7 @@ class ImagePublisher(Node):
 
     super().__init__('image_publisher')
 
-    self.publisher_ = self.create_publisher(Image, 'video_frames', 10)
+    self.publisher_ = self.create_publisher(CompressedImageImage, 'video_frames', 10)
 
     timer_period = 0.02  # seconds
 
