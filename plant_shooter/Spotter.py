@@ -33,7 +33,7 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 1
+p = 0.1
 i = 0
 d = 0
 
@@ -92,8 +92,8 @@ class ImagePublisher(Node):
       ux = min(45, max(-45, ux))
       uy = min(45, max(-45, uy))
       print(x_error)
-      pca.servo[0].angle = uy-90
-      pca.servo[1].angle = ux-90
+      pca.servo[0].angle = uy+90
+      pca.servo[1].angle = ux+90
 
       
     # Display the message on the console
