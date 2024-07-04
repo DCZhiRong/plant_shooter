@@ -38,7 +38,7 @@ ey = 0
 prex = 0
 prey = 0
 
-p = 10
+p = 1
 i = 0
 d = 0
 
