@@ -30,8 +30,6 @@ MAX_IMP  =[2500, 2500]
 MIN_ANG  =[30, 30]
 MAX_ANG  =[150, 150]
 
-pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
-
 prevT = 0
 ex = 0
 ey = 0
@@ -69,10 +67,10 @@ class ImagePublisher(Node):
     self.p = 10
     self.i = 0
     self.d = 0
-
+    self.pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
     for i in range(nbPCAServo):
-        pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
-        pca.servo[i].angle(90)
+        self.pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
+        self.pca.servo[i].angle(90)
 
    
   def timer_callback(self):
@@ -100,8 +98,8 @@ class ImagePublisher(Node):
       min(150, max(30, ux))
       min(150, max(30, uy))
       print(x_error)
-      pca.servo[0].angle(uy)
-      pca.servo[1].angle(ux)
+      self.pca.servo[0].angle(uy)
+      self.pca.servo[1].angle(ux)
 
       
     # Display the message on the console
