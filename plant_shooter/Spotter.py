@@ -92,8 +92,8 @@ class ImagePublisher(Node):
       ux = min(45, max(-45, ux))
       uy = min(45, max(-45, uy))
       print(x_error)
-      pca.servo[0].angle = uy+90
-      pca.servo[1].angle = ux+90
+      pca.servo[0].angle = uy-90
+      pca.servo[1].angle = ux-90
 
       
     # Display the message on the console
