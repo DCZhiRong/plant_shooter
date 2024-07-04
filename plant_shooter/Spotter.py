@@ -77,7 +77,7 @@ class ImagePublisher(Node):
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     if objectInfo:
       x_error = 320-objectInfo[0][0][0]+objectInfo[0][0][2]/2
-      y_error = 240-objectInfo[0][0][1]+objectInfo[0][0][3]/2
+      y_error = 480-objectInfo[0][0][1]+objectInfo[0][0][3]/2
       curT = time.time()
       time_diff = curT-self.prevT
       self.preT = curT
