@@ -33,6 +33,10 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
+p = 0.001
+i = 0
+d = 0
+
 class ImagePublisher(Node):
 
   def __init__(self):
@@ -57,9 +61,6 @@ class ImagePublisher(Node):
     self.prex = 0
     self.prey = 0
 
-    self.p = 0.1
-    self.i = 0
-    self.d = 0
 
     for i in range(nbPCAServo):
         pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
