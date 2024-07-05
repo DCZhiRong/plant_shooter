@@ -33,9 +33,9 @@ MAX_ANG  =[150, 150]
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
-p = 0.04
-i = 0.001
-d = 0.0000001
+p = 0.035
+i = 0.0015
+d = 0
 
 class ImagePublisher(Node):
 
@@ -45,7 +45,7 @@ class ImagePublisher(Node):
 
     self.publisher_ = self.create_publisher(Image, 'video_frames', 10)
 
-    timer_period = 0.03  # seconds
+    timer_period = 0.02  # seconds
 
     self.timer = self.create_timer(timer_period, self.timer_callback)
          
