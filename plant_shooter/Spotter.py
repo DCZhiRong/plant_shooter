@@ -55,7 +55,7 @@ class ImagePublisher(Node):
     # Used to convert between ROS and OpenCV images
     self.br = CvBridge()
 
-    self.prevT = 0
+    self.prevT = time.time()
     self.ex = 0
     self.ey = 0
     self.prex = 0
