@@ -71,7 +71,7 @@ class ImagePublisher(Node):
     ret, frame = self.cap.read()     
     frame = cv2.flip(frame,0)  
     curT = time.time()
-    if (int(curT)%2):
+    if (int(curT)%0.25):
       self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
       return
     result, objectInfo = self.getObjects(frame,0.4,0.2, objects=['bottle'])
