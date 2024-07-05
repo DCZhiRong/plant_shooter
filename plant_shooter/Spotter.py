@@ -76,7 +76,7 @@ class ImagePublisher(Node):
     # image to a ROS 2 image message
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     curT = time.time()
-    if objectInfo and !(int(curT)%2):
+    if objectInfo and not(int(curT)%2):
       x_error = 640-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
       y_error = 360-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
       time_diff = curT-self.prevT
