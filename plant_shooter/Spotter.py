@@ -74,9 +74,11 @@ class ImagePublisher(Node):
     # Publish the image.
     # The 'cv2_to_imgmsg' method converts an OpenCV
     # image to a ROS 2 image message
-    self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     curT = time.time()
-    if objectInfo and not(int(curT)%2):
+    if (int(curT)%2):
+      return
+    self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
+    if objectInfo:
       x_error = 640-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
       y_error = 360-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
       time_diff = curT-self.prevT
