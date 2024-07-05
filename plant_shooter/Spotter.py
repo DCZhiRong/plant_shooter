@@ -75,10 +75,10 @@ class ImagePublisher(Node):
     # The 'cv2_to_imgmsg' method converts an OpenCV
     # image to a ROS 2 image message
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
+    curT = time.time()
     if objectInfo:
       x_error = 640-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
       y_error = 360-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
-      curT = time.time()
       time_diff = curT-self.prevT
       self.preT = curT
       dedtX = (x_error - self.prex)/time_diff
@@ -91,6 +91,7 @@ class ImagePublisher(Node):
       uy = p*y_error + i*self.ey + d*dedtY
       ux = min(60, max(-60, ux))
       uy = min(60, max(-60, uy))
+      time.sleep(1)
       print(uy)
       pca.servo[0].angle = -uy+90
       pca.servo[1].angle = 90
