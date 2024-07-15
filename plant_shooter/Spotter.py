@@ -34,7 +34,7 @@ pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
 
 p = 0.04
-i = 0.0005
+i = 0.0002
 d = 0.0000001
 
 class ImagePublisher(Node):
@@ -97,8 +97,8 @@ class ImagePublisher(Node):
       self.tarx = min(60, max(-60, ux))
       self.tary = min(60, max(-60, uy))
       #print(ux)
-    self.angx = self.angx*0.9 + self.tarx*0.1
-    self.angy = self.angy*0.9 + self.tary*0.1
+    self.angx = self.angx*0.8 + self.tarx*0.2
+    self.angy = self.angy*0.8 + self.tary*0.2
     pca.servo[0].angle = -self.angy+90
     pca.servo[1].angle = self.angx+90
 
