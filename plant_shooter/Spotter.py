@@ -97,8 +97,8 @@ class ImagePublisher(Node):
       self.tarx = min(60, max(-60, ux))
       self.tary = min(60, max(-60, uy))
       #print(ux)
-    self.angx = self.angx*0.8 + self.tarx*0.2
-    self.angy = self.angy*0.8 + self.tary*0.2
+    self.angx = self.angx*0.7 + self.tarx*0.3
+    self.angy = self.angy*0.7 + self.tary*0.3
     pca.servo[0].angle = -self.angy+90
     pca.servo[1].angle = self.angx+90
 
