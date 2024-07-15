@@ -51,7 +51,7 @@ class ImagePublisher(Node):
          
     self.cap = cv2.VideoCapture(0)
     self.cap.set(3,640)
-    self.cap.set(4,640)
+    self.cap.set(4,480)
     # Used to convert between ROS and OpenCV images
     self.br = CvBridge()
 
@@ -83,7 +83,7 @@ class ImagePublisher(Node):
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     if objectInfo:
       x_error = 320-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
-      y_error = 320-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
+      y_error = 240-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
       time_diff = curT-self.prevT
       self.preT = curT
       dedtX = (x_error - self.prex)/time_diff
