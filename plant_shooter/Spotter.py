@@ -50,8 +50,8 @@ class ImagePublisher(Node):
     self.timer = self.create_timer(timer_period, self.timer_callback)
          
     self.cap = cv2.VideoCapture(0)
-    #self.cap.set(3,640)
-    #self.cap.set(4,480)
+    self.cap.set(3,640)
+    self.cap.set(4,640)
     # Used to convert between ROS and OpenCV images
     self.br = CvBridge()
 
@@ -60,6 +60,11 @@ class ImagePublisher(Node):
     self.ey = 0
     self.prex = 0
     self.prey = 0
+
+    self.tarx = 0
+    self.tary = 0
+    self.angx = 0
+    self.angy = 0
 
 
     for i in range(nbPCAServo):
@@ -77,8 +82,8 @@ class ImagePublisher(Node):
     # image to a ROS 2 image message
     self.publisher_.publish(self.br.cv2_to_imgmsg(frame, 'bgr8'))
     if objectInfo:
-      x_error = 640-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
-      y_error = 360-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
+      x_error = 320-(objectInfo[0][0][0]+objectInfo[0][0][2]/2)
+      y_error = 320-(objectInfo[0][0][1]+objectInfo[0][0][3]/2)
       time_diff = curT-self.prevT
       self.preT = curT
       dedtX = (x_error - self.prex)/time_diff
@@ -89,11 +94,13 @@ class ImagePublisher(Node):
       self.prey = y_error
       ux = 0.5*p*x_error + 0.5*i*self.ex + d*dedtX
       uy = p*y_error + i*self.ey + d*dedtY
-      ux = min(60, max(-60, ux))
-      uy = min(60, max(-60, uy))
+      self.tarx = min(60, max(-60, ux))
+      self.tary = min(60, max(-60, uy))
       #print(ux)
-      pca.servo[0].angle = -uy+90
-      pca.servo[1].angle = ux+90
+    self.angx = self.angx*0.9 + self.tarx*0.1
+    self.angy = self.angy*0.9 + self.tary*0.1
+    pca.servo[0].angle = -self.angy+90
+    pca.servo[1].angle = self.angx+90
 
       
     # Display the message on the console
