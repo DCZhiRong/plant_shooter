@@ -75,7 +75,7 @@ class ImagePublisher(Node):
   def timer_callback(self):
     ret, frame = self.cap.read()     
     frame = cv2.flip(frame,0)  
-    result, objectInfo = self.getObjects(frame,0.46,0.2, objects=['bottle'])
+    result, objectInfo = self.getObjects(frame,0.56,0.2, objects=['cell phone'])
     curT = time.time()
     # Publish the image.
     # The 'cv2_to_imgmsg' method converts an OpenCV
@@ -97,8 +97,8 @@ class ImagePublisher(Node):
       self.tarx = min(60, max(-60, ux))
       self.tary = min(60, max(-60, uy))
       #print(ux)
-    self.angx = self.angx*0.6 + self.tarx*0.4
-    self.angy = self.angy*0.6 + self.tary*0.4
+    self.angx = self.angx*0.7 + self.tarx*0.3
+    self.angy = self.angy*0.7 + self.tary*0.3
     pca.servo[0].angle = -self.angy+90
     pca.servo[1].angle = self.angx+90
 
