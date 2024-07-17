@@ -95,7 +95,7 @@ class ImagePublisher(Node):
     elif msg.linear.z <= 0:
       print('low')
       tar_angle = 0
-    while angle != tar_angle:
+    while int(angle - tar_angle) != 0:
       angle = angle*0.9 + tar_angle*0.1
       print('stuck')
       pca.servo[2].angle = angle
