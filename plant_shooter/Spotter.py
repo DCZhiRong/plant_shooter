@@ -114,9 +114,9 @@ class ImagePublisher(Node):
       self.tary = min(150-self.servy, max(30-self.servy, uy))
       #print(ux)
     if self.tarx + self.servx > 150 or self.tarx + self.servx < 60:
-      self.tarx = min(150-self.servx, max(30-self.servx, ux))
+      self.tarx = min(150-self.servx, max(30-self.servx, self.tarx))
     if self.tary + self.servy > 150 or self.tarx + self.servy < 60:
-      self.tary = min(150-self.servy, max(30-self.servy, uy))
+      self.tary = min(150-self.servy, max(30-self.servy, self.tary))
     self.angx = self.angx*0.6 + self.tarx*0.4
     self.angy = self.angy*0.6 + self.tary*0.4
     pca.servo[0].angle = -self.angy+self.servy
