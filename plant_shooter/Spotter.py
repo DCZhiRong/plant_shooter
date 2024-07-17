@@ -92,7 +92,7 @@ class ImagePublisher(Node):
       for i in range(0,180):
         pca.servo[2].angle = i
         print(pca.servo[2].angle)
-    else if msg.linear.z <= 0:
+    elif msg.linear.z <= 0:
       #if pca.servo[2].angle > 0:
       for i in range(180,0):
         pca.servo[2].angle = i
