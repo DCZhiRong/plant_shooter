@@ -80,7 +80,7 @@ class ImagePublisher(Node):
   def listener_callback1(self, msg):
     dir = msg
     self.servx += msg.angular.z
-    self.servy += msg.linear.x*2
+    self.servy -= msg.linear.x*2
     self.servx = min(150, max(30, self.servx))
     self.servy = min(150, max(30, self.servy))
     if msg.linear.z > 0:
