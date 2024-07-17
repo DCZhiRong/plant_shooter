@@ -75,10 +75,7 @@ class ImagePublisher(Node):
       pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
       pca.servo[i].angle = 90
     pca.servo[2].set_pulse_width_range(MIN_IMP[2] , MAX_IMP[2])
-    for i in range(90,180):
-      pca.servo[2].angle = i
-    for i in range(180,90):
-      pca.servo[2].angle = i
+    pca.servo[2].angle = 0
     
     self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
 
@@ -90,14 +87,14 @@ class ImagePublisher(Node):
     angle = pca.servo[2].angle
     tar_angle = pca.servo[2].angle
     if msg.linear.z > 0:
-      print('high')
+      # print('high')
       tar_angle = 180
-    elif msg.linear.z <= 0:
-      print('low')
+    elif msg.linear.z < 0:
+      # print('low')
       tar_angle = 0
     while int(angle - tar_angle) != 0:
       angle = angle*0.9 + tar_angle*0.1
-      print(angle)
+      # print(angle)
       pca.servo[2].angle = angle
 
    
