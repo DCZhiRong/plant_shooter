@@ -113,9 +113,9 @@ class ImagePublisher(Node):
       self.tarx = min(150-self.servx, max(30-self.servx, ux))
       self.tary = min(150-self.servy, max(30-self.servy, uy))
       #print(ux)
-    if self.tarx + self.servx > 150:
+    if self.tarx + self.servx > 150 or self.tarx + self.servx < 60:
       self.tarx = min(150-self.servx, max(30-self.servx, ux))
-    if self.tary + self.servy > 150:
+    if self.tary + self.servy > 150 or self.tarx + self.servy < 60:
       self.tary = min(150-self.servy, max(30-self.servy, uy))
     self.angx = self.angx*0.6 + self.tarx*0.4
     self.angy = self.angy*0.6 + self.tary*0.4
