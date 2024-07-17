@@ -75,7 +75,10 @@ class ImagePublisher(Node):
       pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
       pca.servo[i].angle = 90
     pca.servo[2].set_pulse_width_range(MIN_IMP[2] , MAX_IMP[2])
-    pca.servo[2].angle = 0
+    for i in range(1,180):
+      pca.servo[2].angle = i
+    for i in range(180,0):
+      pca.servo[2].angle = i
     
     self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
 
@@ -85,11 +88,13 @@ class ImagePublisher(Node):
     self.servx = min(150, max(30, self.servx))
     self.servy = min(150, max(30, self.servy))
     if msg.linear.z > 0:
-      print("works")
-      for i in range(1,180):
-        pca.servo[2].angle = i
+      if pca.servo[2].angle < 179:
+        for i in range(1,180):
+          pca.servo[2].angle = i
     else:
-      pca.servo[2].angle = 0
+      if pca.servo[2].angle > 0:
+        for i in range(180,0):
+          pca.servo[2].angle = i
 
    
   def timer_callback(self):
