@@ -47,7 +47,7 @@ class ImagePublisher(Node):
 
     self.publisher_ = self.create_publisher(Image, 'video_frames', 10)
 
-    timer_period = 1/30  # seconds
+    timer_period = 1/15  # seconds
 
     self.timer = self.create_timer(timer_period, self.timer_callback)
          
@@ -78,7 +78,6 @@ class ImagePublisher(Node):
     self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
 
   def listener_callback1(self, msg):
-    dir = msg
     self.servx += msg.angular.z
     self.servy -= msg.linear.x*2
     self.servx = min(150, max(30, self.servx))
@@ -115,9 +114,11 @@ class ImagePublisher(Node):
       self.tary = min(150-self.servy, max(30-self.servy, uy))
       #print(ux)
     if self.tarx + self.servx > 150:
-      150 - self.servx
-    self.angx = self.angx*0.7 + self.tarx*0.3
-    self.angy = self.angy*0.7 + self.tary*0.3
+      self.tarx = min(150-self.servx, max(30-self.servx, ux))
+    if self.tary + self.servy > 150:
+      self.tary = min(150-self.servy, max(30-self.servy, uy))
+    self.angx = self.angx*0.6 + self.tarx*0.4
+    self.angy = self.angy*0.6 + self.tary*0.4
     pca.servo[0].angle = -self.angy+self.servy
     pca.servo[1].angle = self.angx+self.servx
 
