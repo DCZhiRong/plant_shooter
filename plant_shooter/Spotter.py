@@ -27,7 +27,7 @@ net.setInputSwapRB(True)
 
 nbPCAServo=2
 
-MIN_IMP  =[1000, 1000, 1000]
+MIN_IMP  =[1000, 1000, 500]
 MAX_IMP  =[2500, 2500, 2000]
 MIN_ANG  =[30, 30, 0]
 MAX_ANG  =[150, 150, 180]
