@@ -7,7 +7,6 @@ from adafruit_servokit import ServoKit
 import rclpy # Python Client Library for ROS 2
 from rclpy.node import Node # Handles the creation of nodes
 from geometry_msgs.msg import Twist
-
 from sensor_msgs.msg import Image # Image is the message type
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import cv2 # OpenCV library
@@ -69,10 +68,21 @@ class ImagePublisher(Node):
     self.angx = 0
     self.angy = 0
 
+    self.servx = 90
+    self.servy = 90
 
     for i in range(nbPCAServo):
-        pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
-        pca.servo[i].angle = 90
+      pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
+      pca.servo[i].angle = 90
+    
+    self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
+
+  def listener_callback1(self, msg):
+    dir = msg
+    self.servx += msg.angular.z
+    self.servy += msg.linear.x*2
+    self.servx = min(150, max(30, self.servx))
+    self.servy = min(150, max(30, self.servy))
 
    
   def timer_callback(self):
@@ -97,13 +107,15 @@ class ImagePublisher(Node):
       self.prey = y_error
       ux = 0.5*p*x_error + 0.5*i*self.ex + d*dedtX
       uy = p*y_error + i*self.ey + d*dedtY
-      self.tarx = min(60, max(-60, ux))
-      self.tary = min(60, max(-60, uy))
+      self.tarx = min(150-self.servx, max(30-self.servx, ux))
+      self.tary = min(150-self.servy, max(30-self.servy, uy))
       #print(ux)
+    if self.tarx + self.servx > 150:
+      150 - self.servx
     self.angx = self.angx*0.7 + self.tarx*0.3
     self.angy = self.angy*0.7 + self.tary*0.3
-    pca.servo[0].angle = -self.angy+90
-    pca.servo[1].angle = self.angx+90
+    pca.servo[0].angle = -self.angy+self.servy
+    pca.servo[1].angle = self.angx+self.servx
 
       
     # Display the message on the console
