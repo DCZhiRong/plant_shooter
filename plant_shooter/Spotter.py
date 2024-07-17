@@ -95,6 +95,7 @@ class ImagePublisher(Node):
       if pca.servo[2].angle > 0:
         for i in range(180,90):
           pca.servo[2].angle = i
+    print(pca.servo[2].angle)
 
    
   def timer_callback(self):
