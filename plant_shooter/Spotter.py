@@ -85,6 +85,7 @@ class ImagePublisher(Node):
     self.servx = min(150, max(30, self.servx))
     self.servy = min(150, max(30, self.servy))
     if msg.linear.z > 0:
+      print("works")
       for i in range(1,180):
         pca.servo[2].angle = i
     else:
