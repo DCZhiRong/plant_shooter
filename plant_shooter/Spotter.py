@@ -88,15 +88,19 @@ class ImagePublisher(Node):
     self.servx = min(150, max(30, self.servx))
     self.servy = min(150, max(30, self.servy))
     if msg.linear.z > 0:
+      print('high')
+      pca.servo[2].angle = 180
       #if pca.servo[2].angle < 180:
-      for i in range(0,180):
-        pca.servo[2].angle = i
-        print(pca.servo[2].angle)
+      # for i in range(0,181):
+      #   pca.servo[2].angle = i
+      #   print(pca.servo[2].angle)
     elif msg.linear.z <= 0:
+      print('low')
+      pca.servo[2].angle = 0
       #if pca.servo[2].angle > 0:
-      for i in range(180,0):
-        pca.servo[2].angle = i
-        print(pca.servo[2].angle)
+      # for i in range(180,-1):
+      #   pca.servo[2].angle = i
+      #   print(pca.servo[2].angle)
 
    
   def timer_callback(self):
