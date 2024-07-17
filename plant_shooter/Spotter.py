@@ -27,10 +27,10 @@ net.setInputSwapRB(True)
 
 nbPCAServo=2
 
-MIN_IMP  =[1000, 1000]
-MAX_IMP  =[2500, 2500]
-MIN_ANG  =[30, 30]
-MAX_ANG  =[150, 150]
+MIN_IMP  =[1000, 1000, 1000]
+MAX_IMP  =[2500, 2500, 2000]
+MIN_ANG  =[30, 30, 0]
+MAX_ANG  =[150, 150, 180]
 
 pca = ServoKit(channels=16, i2c=busio.I2C((2,8),(2,7)))
 
@@ -83,6 +83,10 @@ class ImagePublisher(Node):
     self.servy += msg.linear.x*2
     self.servx = min(150, max(30, self.servx))
     self.servy = min(150, max(30, self.servy))
+    if msg.linear.z > 0:
+      pca.servo[2].angle = 180
+    else:
+      pca.servo[2].angle = 0
 
    
   def timer_callback(self):
