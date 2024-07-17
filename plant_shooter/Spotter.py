@@ -75,7 +75,7 @@ class ImagePublisher(Node):
       pca.servo[i].set_pulse_width_range(MIN_IMP[i] , MAX_IMP[i])
       pca.servo[i].angle = 90
     
-    #self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
+    self.subscription1 = self.create_subscription(Twist, 'cmd_vel', self.listener_callback1, 10)
 
   def listener_callback1(self, msg):
     self.servx += msg.angular.z
