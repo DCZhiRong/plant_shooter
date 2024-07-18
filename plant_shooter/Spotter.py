@@ -76,7 +76,7 @@ class ImagePublisher(Node):
       pca.servo[i].angle = 90
     pca.servo[2].set_pulse_width_range(MIN_IMP[2] , MAX_IMP[2])
     angle = 180
-    while int(angle - tar_angle) != 0:
+    while int(angle - 0) != 0:
       angle = angle*0.99 + 0*0.01
       print(angle)
       pca.servo[2].angle = angle
