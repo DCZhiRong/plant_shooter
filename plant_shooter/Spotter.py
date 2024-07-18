@@ -93,7 +93,7 @@ class ImagePublisher(Node):
       # print('low')
       tar_angle = 0
     while int(angle - tar_angle) != 0:
-      angle = angle*0.9 + tar_angle*0.1
+      angle = angle*0.99 + tar_angle*0.01
       #print(angle)
       pca.servo[2].angle = angle
 
